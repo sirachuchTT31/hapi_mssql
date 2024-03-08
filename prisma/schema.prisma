@@ -1,0 +1,106 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlserver"
+  url      = env("DATABASE_URL")
+}
+
+model Employee {
+  Id                      BigInt    @id @default(autoincrement())
+  UserId                  String?   @db.NVarChar(Max)
+  EmpNo                   String?   @db.NVarChar(Max)
+  TitleNameTH             String?   @db.NVarChar(Max)
+  FirstNameTH             String?   @db.NVarChar(Max)
+  LastNameTH              String?   @db.NVarChar(Max)
+  TitleNameEN             String?   @db.NVarChar(Max)
+  FirstNameEN             String?   @db.NVarChar(Max)
+  LastNameEN              String?   @db.NVarChar(Max)
+  Gender                  String?   @db.NVarChar(20)
+  DOB                     DateTime?
+  Email                   String?   @db.NVarChar(Max)
+  HomePhone               String?   @db.NVarChar(20)
+  MobilePhone             String?   @db.NVarChar(20)
+  MobilePhone2            String?   @db.NVarChar(Max)
+  EmployeeStatusCode      String?   @db.NVarChar(50)
+  EmployeeStatusDesc      String?   @db.NVarChar(Max)
+  EmploymentStatusCode    String?   @db.NVarChar(50)
+  EmploymentStatusDesc    String?   @db.NVarChar(Max)
+  ContractDateFrom        DateTime?
+  ContractDateTo          DateTime?
+  FirstJoinDate           DateTime?
+  RehireDate              DateTime?
+  ServiceYearConsiderDate DateTime?
+  ConfirmDate             DateTime?
+  TerminateDate       DateTime?
+  CompanyCode         String?   @db.NVarChar(256)
+  CompanyNameTH       String?   @db.NVarChar(Max)
+  CompanyNameEN       String?   @db.NVarChar(Max)
+  PositionCode        String?   @db.NVarChar(256)
+  PositionNameTH      String?   @db.NVarChar(Max)
+  PositionNameEN      String?   @db.NVarChar(Max)
+  OrgLevel1Code       String?   @db.NVarChar(256)
+  OrgLevel1NameTH     String?   @db.NVarChar(Max)
+  OrgLevel1NameEN     String?   @db.NVarChar(Max)
+  OrgLevel2Code       String?   @db.NVarChar(256)
+  OrgLevel2NameTH     String?   @db.NVarChar(Max)
+  OrgLevel2NameEN     String?   @db.NVarChar(Max)
+  OrgLevel3Code       String?   @db.NVarChar(256)
+  OrgLevel3NameTH     String?   @db.NVarChar(Max)
+  OrgLevel3NameEN     String?   @db.NVarChar(Max)
+  OrgLevel4Code       String?   @db.NVarChar(256)
+  OrgLevel4NameTH     String?   @db.NVarChar(Max)
+  OrgLevel4NameEN     String?   @db.NVarChar(Max)
+  OrgLevel5Code       String?   @db.NVarChar(256)
+  OrgLevel5NameTH     String?   @db.NVarChar(Max)
+  OrgLevel5NameEN     String?   @db.NVarChar(Max)
+  GradeLevelCode      String?   @db.NVarChar(256)
+  GradeLevelNameTH    String?   @db.NVarChar(Max)
+  GradeLevelNameEN    String?   @db.NVarChar(Max)
+  GradeCode           String?   @db.NVarChar(256)
+  GradeName           String?   @db.NVarChar(Max)
+  WorkLocationCode    String?   @db.NVarChar(256)
+  WorkLocationNameTH  String?   @db.NVarChar(Max)
+  WorkLocationNameEN  String?   @db.NVarChar(Max)
+  SupervisorCode      String?   @db.NVarChar(256)
+  SupervisorNameTH    String?   @db.NVarChar(Max)
+  SupervisorNameEN    String?   @db.NVarChar(Max)
+  SupervisorPosCode   String?   @db.NVarChar(256)
+  SupervisorPosNameTH String?   @db.NVarChar(Max)
+  SupervisorPosNameEN String?   @db.NVarChar(Max)
+  CostCenterCode      String?   @db.NVarChar(256)
+  CostCenterName      String?   @db.NVarChar(Max)
+  NickName            String?   @db.NVarChar(Max)
+  StatusInfo          String?   @db.NVarChar(Max)
+  Building            String?   @db.NVarChar(Max)
+  Floor               String?   @db.NVarChar(Max)
+  Remarks             String?   @db.NVarChar(Max)
+  IdRef               String?   @db.NVarChar(Max)
+  ShowMobilePhone     Boolean?  @db.Bit
+  ShowDOB             Boolean?  @db.Bit
+  Facebook            String?   @db.NVarChar(Max)
+  LINE                String?   @db.NVarChar(Max)
+  Instagram           String?   @db.NVarChar(Max)
+  Extension           String?   @db.NVarChar(Max)
+  CreatedDate         DateTime
+  CreatedBy           String?   @db.NVarChar(Max)
+  UpdatedDate         DateTime?
+  UpdatedBy           String?   @db.NVarChar(Max)
+}
+
+
+model RSAData {
+  id Int @id @default(autoincrement())
+  session_id  String?   @db.NVarChar(Max)
+  app_public_key String ? @db.NVarChar(Max)
+  server_public_key String ? @db.NVarChar(Max)
+  server_private_key String ? @db.NVarChar(Max)
+  created_date DateTime?
+}
