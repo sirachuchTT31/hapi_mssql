@@ -24,8 +24,16 @@ const IBaseCollectionResultsPaginationModel = {
     errorMessage: '',
 }
 
+const IBaseNocontentModel = {
+    status : false,
+    status_code : 0,
+    message : '',
+    error_message : ''
+}
+
 module.exports = {
     IBaseSingleResultModel,
     IBaseCollectionResultsModel,
-    IBaseCollectionResultsPaginationModel
+    IBaseCollectionResultsPaginationModel,
+    IBaseNocontentModel
 }

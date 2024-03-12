@@ -1,4 +1,5 @@
 const baseResult = require('./Response_model.js')
+const http_response = require('../constant/http-response.js')
 const IBaseSingleResult = async (data) => {
     return new Promise(async (resolve, reject) => {
         try {
@@ -18,8 +19,8 @@ const IBaseSingleResult = async (data) => {
                 let response = {
                     results: null,
                     status: false,
-                    status_code: 400,
-                    message: 'Bad request',
+                    status_code: http_response.STATUS_400.status_code,
+                    message: http_response.STATUS_400.message,
                     errorMessage: data.errorMessage
                 }
                 resolve({
@@ -53,8 +54,8 @@ const IBaseCollectionResults = async (data) => {
                 let response = {
                     results: null,
                     status: false,
-                    status_code: 400,
-                    message: 'Bad request',
+                    status_code: http_response.STATUS_400.status_code,
+                    message: http_response.STATUS_400.message,
                     errorMessage: data.errorMessage
                 }
                 resolve({
@@ -91,11 +92,11 @@ const IBaseCollectionResultsPagination = async (data) => {
                 let response = {
                     results: null,
                     status: false,
-                    status_code: 400,
+                    status_code: http_response.STATUS_400.status_code,
                     total_record: 0,
                     page: 0,
                     per_page: 0,
-                    message: 'Bad request',
+                    message: http_response.STATUS_400.message,
                     errorMessage: data.errorMessage
                 }
                 resolve({
@@ -110,8 +111,40 @@ const IBaseCollectionResultsPagination = async (data) => {
     })
 }
 
+const IBaseNocontent = async (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (baseResult.IBaseNocontentModel == data) {
+                let response = {
+                    status: data.status,
+                    status_code: data.status_code,
+                    message: data.message,
+                    error_message: data.error_message
+                }
+                resolve({
+                    ...response
+                })
+            }
+            else {
+                let response = {
+                    status: false,
+                    status_code: http_response.STATUS_400.status_code,
+                    message: http_response.STATUS_400.message,
+                    error_message: data.errorMessage
+                }
+                resolve({
+                    ...response
+                })
+            }
+        }
+        catch (e) {
+            reject(e)
+        }
+    })
+}
 module.exports = {
     IBaseSingleResult,
     IBaseCollectionResults,
-    IBaseCollectionResultsPagination
+    IBaseCollectionResultsPagination,
+    IBaseNocontent
 }

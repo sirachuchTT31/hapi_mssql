@@ -2,6 +2,7 @@ const { PrismaClient } = require('@prisma/client')
 const prisma = new PrismaClient()
 const BaseResult = require('../utils/Response.js')
 const BaseInterface = require('../utils/Response_model.js')
+const http_response = require('../constant/http-response.js')
 const getemployeeAll = {
     handler: async (request, reply) => {
         try {
@@ -19,7 +20,7 @@ const getemployeeAll = {
             if (data?.length > 0) {
                 BaseInterface.IBaseCollectionResultsModel.results = data
                 BaseInterface.IBaseCollectionResultsModel.status = true
-                BaseInterface.IBaseCollectionResultsModel.status_code = 200
+                BaseInterface.IBaseCollectionResultsModel.status_code = http_response.STATUS_200.status_code
                 BaseInterface.IBaseCollectionResultsModel.message = 'Get List data successfully'
                 BaseInterface.IBaseCollectionResultsModel.errorMessage = null
                 return reply.response(await BaseResult.IBaseCollectionResults(BaseInterface.IBaseCollectionResultsModel))
@@ -27,8 +28,8 @@ const getemployeeAll = {
             else {
                 BaseInterface.IBaseCollectionResultsModel.results = null
                 BaseInterface.IBaseCollectionResultsModel.status = false
-                BaseInterface.IBaseCollectionResultsModel.status_code = 200
-                BaseInterface.IBaseCollectionResultsModel.message = 'Data not found'
+                BaseInterface.IBaseCollectionResultsModel.status_code = http_response.STATUS_200.status_code
+                BaseInterface.IBaseCollectionResultsModel.message = 'No content'
                 BaseInterface.IBaseCollectionResultsModel.errorMessage = null
                 return reply.response(await BaseResult.IBaseCollectionResults(BaseInterface.IBaseCollectionResultsModel))
             }
@@ -62,7 +63,7 @@ const getemployeeWhereEmpNo = {
             if (data) {
                 BaseInterface.IBaseSingleResultModel.result = data
                 BaseInterface.IBaseSingleResultModel.status = true
-                BaseInterface.IBaseSingleResultModel.status_code = 200
+                BaseInterface.IBaseSingleResultModel.status_code = http_response.STATUS_200.status_code
                 BaseInterface.IBaseSingleResultModel.message = 'Get data successfully'
                 BaseInterface.IBaseSingleResultModel.errorMessage = null
                 return reply.response(await BaseResult.IBaseSingleResult(BaseInterface.IBaseSingleResultModel))
@@ -70,8 +71,8 @@ const getemployeeWhereEmpNo = {
             else {
                 BaseInterface.IBaseSingleResultModel.result = null
                 BaseInterface.IBaseSingleResultModel.status = false
-                BaseInterface.IBaseSingleResultModel.status_code = 200
-                BaseInterface.IBaseSingleResultModel.message = 'Data not found'
+                BaseInterface.IBaseSingleResultModel.status_code = http_response.STATUS_200.status_code
+                BaseInterface.IBaseSingleResultModel.message = 'No content'
                 BaseInterface.IBaseSingleResultModel.errorMessage = null
                 return reply.response(await BaseResult.IBaseSingleResult(BaseInterface.IBaseSingleResultModel))
             }
@@ -120,7 +121,7 @@ const getemployeeLike = {
             if (data?.length > 0) {
                 BaseInterface.IBaseCollectionResultsModel.results = data
                 BaseInterface.IBaseCollectionResultsModel.status = true
-                BaseInterface.IBaseCollectionResultsModel.status_code = 200
+                BaseInterface.IBaseCollectionResultsModel.status_code = http_response.STATUS_200.status_code
                 BaseInterface.IBaseCollectionResultsModel.message = 'Get List data successfully'
                 BaseInterface.IBaseCollectionResultsModel.errorMessage = null
                 return reply.response(await BaseResult.IBaseCollectionResults(BaseInterface.IBaseCollectionResultsModel))
@@ -128,8 +129,8 @@ const getemployeeLike = {
             else {
                 BaseInterface.IBaseCollectionResultsModel.results = null
                 BaseInterface.IBaseCollectionResultsModel.status = false
-                BaseInterface.IBaseCollectionResultsModel.status_code = 200
-                BaseInterface.IBaseCollectionResultsModel.message = 'Data not found'
+                BaseInterface.IBaseCollectionResultsModel.status_code = http_response.STATUS_200.status_code
+                BaseInterface.IBaseCollectionResultsModel.message = 'No content'
                 BaseInterface.IBaseCollectionResultsModel.errorMessage = null
                 return reply.response(await BaseResult.IBaseCollectionResults(BaseInterface.IBaseCollectionResultsModel))
             }
@@ -173,11 +174,11 @@ const getemployeePagination = {
             else {
                 BaseInterface.IBaseCollectionResultsPaginationModel.results = null
                 BaseInterface.IBaseCollectionResultsPaginationModel.status = false
-                BaseInterface.IBaseCollectionResultsPaginationModel.status_code = 400
+                BaseInterface.IBaseCollectionResultsPaginationModel.status_code = http_response.STATUS_200.status_code
                 BaseInterface.IBaseCollectionResultsPaginationModel.total_record = data?.length
                 BaseInterface.IBaseCollectionResultsPaginationModel.page = 0
                 BaseInterface.IBaseCollectionResultsPaginationModel.per_page = 0
-                BaseInterface.IBaseCollectionResultsPaginationModel.message = 'Bad request'
+                BaseInterface.IBaseCollectionResultsPaginationModel.message = 'No content'
                 BaseInterface.IBaseCollectionResultsPaginationModel.errorMessage = null
                 return reply.response(await BaseResult.IBaseCollectionResultsPagination(BaseInterface.IBaseCollectionResultsPaginationModel))
             }
@@ -188,9 +189,49 @@ const getemployeePagination = {
         }
     }
 }
+
+const updateEmployeeWhereId = {
+    handler: async (request, reply) => {
+        try {
+            const payload = request.payload
+            const data = await prisma.employee.update({
+                where: {
+                    Id: Number(payload.Id)
+                },
+                data: {
+                    FirstNameTH: payload.FirstNameTH,
+                    LastNameTH: payload.LastNameTH
+                }
+            }).then((v) => {
+                return v
+            }).catch((e) => {
+                return e
+            })
+            console.log(data)
+            if (data) {
+                BaseInterface.IBaseNocontentModel.status = true
+                BaseInterface.IBaseNocontentModel.status_code = 200
+                BaseInterface.IBaseNocontentModel.message = 'Update employee successfully'
+                BaseInterface.IBaseNocontentModel.error_message = null
+                return reply.response(await BaseResult.IBaseNocontent(BaseInterface.IBaseNocontentModel))
+            }
+            else {
+                BaseInterface.IBaseNocontentModel.status = false
+                BaseInterface.IBaseNocontentModel.status_code = http_response.STATUS_500.status_code
+                BaseInterface.IBaseNocontentModel.message = http_response.STATUS_500.message
+                BaseInterface.IBaseNocontentModel.error_message = null
+                return reply.response(await BaseResult.IBaseNocontent(BaseInterface.IBaseNocontentModel))
+            }
+        }
+        catch (e) {
+
+        }
+    }
+}
 module.exports = {
     getemployeeAll,
     getemployeeWhereEmpNo,
     getemployeeLike,
-    getemployeePagination
+    getemployeePagination,
+    updateEmployeeWhereId
 }

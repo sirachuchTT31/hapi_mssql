@@ -1,4 +1,3 @@
-const server = require('../../index.js')
 const Controller = require('../controllers/api.controllers.js')
 
 const routers = [
@@ -21,6 +20,11 @@ const routers = [
         method: 'GET',
         path: '/api/getemppagination',
         config: Controller.getemployeePagination
+    },
+    {
+        method: 'POST',
+        path : '/api/updateemp',
+        config : Controller.updateEmployeeWhereId
     }
 ]
 module.exports = routers
